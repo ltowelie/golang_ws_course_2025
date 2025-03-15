@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"log/slog"
 
-	"repository_example/internal/repository"
 	"repository_example/internal/service"
 )
 
@@ -31,7 +30,7 @@ func NewApplication(ctx context.Context) (*Application, error) {
 		return nil, err
 	}
 
-	repo, err := repository.New(ctx, &cfg.Repo)
+	repo, err := NewRepository(ctx, &cfg.Repo)
 	if err != nil {
 		return nil, fmt.Errorf("failed to init repository: %w", err)
 	}

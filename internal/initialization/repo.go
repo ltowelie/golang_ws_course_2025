@@ -1,11 +1,10 @@
-package repository
+package initialization
 
 import (
 	"context"
 	"fmt"
 	"log/slog"
 
-	"repository_example/internal/initialization"
 	"repository_example/internal/models"
 	"repository_example/internal/repository/sqlite"
 )
@@ -20,7 +19,7 @@ type Repo struct {
 	repoImpl repoImpl
 }
 
-func New(ctx context.Context, cfg *initialization.ConfigRepo) (*Repo, error) {
+func NewRepository(ctx context.Context, cfg *ConfigRepo) (*Repo, error) {
 	slog.Debug("initializing repository")
 	var repo repoImpl
 	var err error
@@ -28,8 +27,6 @@ func New(ctx context.Context, cfg *initialization.ConfigRepo) (*Repo, error) {
 	switch cfg.DBType {
 	case "sqlite":
 		repo, err = sqlite.NewSqlitePizzaRepository(cfg.DBConn)
-	case "postgres":
-
 	default:
 		return nil, fmt.Errorf("unknown DB_TYPE: %s", cfg.DBType)
 	}
